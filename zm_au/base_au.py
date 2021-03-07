@@ -5,6 +5,11 @@ import packaging.version
 import zmtools
 
 
+class UpdateException(Exception):
+    # Base exception class for this module
+    pass
+
+
 class BaseAU():
 
     """Base auto-updater class. Will not work as is; its purpose is to be inherited from
