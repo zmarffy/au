@@ -14,10 +14,11 @@ setuptools.setup(
     url='https://github.com/zmarffy/au',
     license='MIT',
     description='auto-updater for programs',
-    python_requires='',
+    python_requires='>=3.9',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     install_requires=[
+        'packaging',
         'zetuptools>=3.0.0',
         'zmtools'
     ]

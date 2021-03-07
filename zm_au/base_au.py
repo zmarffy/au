@@ -55,7 +55,7 @@ class BaseAU():
                 with zmtools.working_directory(temp_dir):
                     update_file = self._download()
                     self._update(update_file)
-            print("Exiting")
+            print("Exiting as an update has completed")
             sys.exit()
 
     @property
