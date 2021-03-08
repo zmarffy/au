@@ -21,5 +21,5 @@ setuptools.setup(
         'packaging',
         'zetuptools>=3.0.0',
         'zmtools'
-    ]
+    ],
 )
