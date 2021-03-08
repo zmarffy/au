@@ -39,7 +39,7 @@ class PipGitHubAU(BaseAU):
                 ["gh", "api", f"repos/{self.github_location}/releases"]))
         except subprocess.CalledProcessError:
             raise UpdateException(
-                f"Either {self.name} doesn't exist or you need to authorize with GitHub (run `gh auth login`) before attempting to check for updates for it")
+                f"Either {self.github_location} doesn't exist or you need to authorize with GitHub (run `gh auth login`) before attempting to check for updates for it")
         if not self.check_prerelease:
             latest = next(x for x in d if not x["prerelease"])
         else:
