@@ -14,7 +14,7 @@ setuptools.setup(
     url='https://github.com/zmarffy/au',
     license='MIT',
     description='auto-updater for programs',
-    python_requires='>=3.9',
+    python_requires='>=3.6',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     install_requires=[
