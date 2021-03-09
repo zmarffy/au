@@ -11,6 +11,8 @@ from .base_au import BaseAU, UpdateException
 
 class PipGitHubAU(BaseAU):
 
+    # TODO: Make this inherit from a GitHubBaseAU
+
     def __init__(self, name, github_location, check_prerelease=False, dist="whl", silent=False):
         # If silent, redirect output of pip to the null device
         # Other parameters tell which uploads to look for and where (note that github_location's format is like "zmarffy/au")
@@ -43,7 +45,7 @@ class PipGitHubAU(BaseAU):
         if not self.check_prerelease:
             latest = next(x for x in d if not x["prerelease"])
         else:
-            latest = next(x for x in d)
+            latest = d[0]
         return latest["tag_name"]
 
     def _download(self):
