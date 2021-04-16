@@ -3,6 +3,7 @@ import json
 import os
 import subprocess
 import sys
+from typing import Optional
 
 from zetuptools import PipPackage
 
@@ -11,9 +12,9 @@ from .base_au import BaseAU, UpdateException
 
 class PipGitHubAU(BaseAU):
 
-    # TODO: Make this inherit from a GitHubBaseAU
+    # TODO: Make this inherit from a GitHubBaseAU (requires a slight refactor)
 
-    def __init__(self, name, github_location, check_prerelease=False, dist="whl", silent=False):
+    def __init__(self, name: str, github_location: str, check_prerelease: bool = False, dist: str = "whl", silent: bool = False):
         # If silent, redirect output of pip to the null device
         # Other parameters tell which uploads to look for and where (note that github_location's format is like "zmarffy/au")
         self._pip_package = PipPackage(name)
@@ -24,17 +25,17 @@ class PipGitHubAU(BaseAU):
         super().__init__()
 
     @property
-    def _o(self):
+    def _o(self) -> Optional[int]:
         # Determines what to redirect output to
         if self.silent:
             return subprocess.DEVNULL
         else:
             return None
 
-    def _get_current_version(self):
+    def _get_current_version(self) -> str:
         return self._pip_package.version
 
-    def _get_latest_version(self):
+    def _get_latest_version(self) -> str:
         # Uses `gh api` to find the latest version
         try:
             d = json.loads(subprocess.check_output(
@@ -48,8 +49,8 @@ class PipGitHubAU(BaseAU):
             latest = d[0]
         return latest["tag_name"]
 
-    def _download(self):
-        # Uses `gh release download` to download the version found from _get_latest_version (doesn't blindly install the latest version to avoid weird race conditions)
+    def _download(self) -> str:
+        # Uses `gh release download` to download the version found from _get_latest_version (doesn't blindly install the latest version to avoid a super rare race condition)
         subprocess.run(["gh", "release", "download", self.latest_version,
                         "-R", self.github_location, "-p", f"*.{self.dist}"], stdout=self._o)
         files = os.listdir()
@@ -58,7 +59,7 @@ class PipGitHubAU(BaseAU):
                 f"Ambiguous install instructions as multiple files were downloaded. Files: {files}")
         return files[0]
 
-    def _update(self, update_file):
+    def _update(self, update_file: str):
         # Installs a file with `pip install`
         subprocess.run([sys.executable, "-m", "pip",
                         "install", update_file], stdout=self._o)

@@ -1,5 +1,7 @@
+import os
 import sys
 from tempfile import TemporaryDirectory
+from typing import Union
 
 import packaging.version
 import zmtools
@@ -20,31 +22,31 @@ class BaseAU():
         needs_update (bool): If the package is not the latest version
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.current_version = self._get_current_version()
         self.latest_version = self._get_latest_version()
 
-    def _get_current_version(self):
+    def _get_current_version(self) -> str:
         # Override me!
         # This function must return the current version of the package
         pass
 
-    def _get_latest_version(self):
+    def _get_latest_version(self) -> str:
         # Override me!
         # This function must return the latest version of the package
         pass
 
-    def _download(self):
+    def _download(self) -> Union[os.PathLike, str]:
         # Override me!
         # This function must download the package and return the filename of the downloaded file
         pass
 
-    def _update(self, update_file):
+    def _update(self, update_file: Union[os.PathLike, str]) -> None:
         # Override me!
         # This function must install a package whose location is passed via the sole parameter
         pass
 
-    def update(self, prompt=True):
+    def update(self, prompt: bool = True) -> None:
         """Update the package
 
         Args:
@@ -59,5 +61,5 @@ class BaseAU():
             sys.exit()
 
     @property
-    def needs_update(self):
+    def needs_update(self) -> bool:
         return packaging.version.parse(self.latest_version) > packaging.version.parse(self.current_version)
