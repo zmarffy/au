@@ -13,7 +13,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     url='https://github.com/zmarffy/au',
     license='MIT',
-    description='auto-updater for programs',
+    description='Auto-updater for programs',
     python_requires='>=3.6',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
