@@ -61,5 +61,13 @@ class BaseAU():
             sys.exit()
 
     @property
+    def currently_installed_version_is_unreleased(self) -> bool:
+        # Override me!
+        # This property should return True if the currently installed version of a package is in development, i.e. an unreleased commit
+        return False
+
+    @property
     def needs_update(self) -> bool:
-        return packaging.version.parse(self.latest_version) > packaging.version.parse(self.current_version)
+        latest_version = packaging.version.parse(self.latest_version)
+        current_version = packaging.version.parse(self.current_version)
+        return (latest_version > current_version) or (latest_version == current_version and not self.currently_installed_version_is_unreleased)

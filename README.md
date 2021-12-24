@@ -21,7 +21,7 @@ When the code is run, if there is an update available on PyPI, the user will be 
 
 Take a guess what `prompt=False` would do.
 
-Let's say you are creating a Python package called `boppityskip` on "bigboi"'s GitHub repo and you want it to notify the user when there is an update available on GitHub releases for it, probably because the package is private and not on PyPI. Insert this code where you want the update check to happen.
+Let's say you are creating a Python package called `boppityskip` on bigboi's GitHub repo and you want it to notify the user when there is an update available on GitHub releases for it, probably because the package is private and not on PyPI. Insert this code where you want the update check to happen.
 
 ```python
 from zm_au import PipGitHubAU

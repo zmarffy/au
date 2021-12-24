@@ -2,14 +2,14 @@ import os
 import re
 import setuptools
 
-with open(os.path.join("zm_au", "__init__.py"), encoding="utf8") as f:
+with open(os.path.join('zm_au', '__init__.py'), encoding='utf8') as f:
     version = re.search(r'__version__ = "(.*?)"', f.read()).group(1)
 
 setuptools.setup(
-    name="zm-au",
+    name='zm-au',
     version=version,
-    author="Zeke Marffy",
-    author_email="zmarffy@yahoo.com",
+    author='Zeke Marffy',
+    author_email='zmarffy@yahoo.com',
     packages=setuptools.find_packages(),
     url='https://github.com/zmarffy/au',
     license='MIT',
@@ -19,7 +19,7 @@ setuptools.setup(
     long_description_content_type='text/markdown',
     install_requires=[
         'packaging',
-        'zetuptools>=3.0.0',
-        'zmtools'
+        'zetuptools>=4.0.0',
+        'zmtools>=2.0.0'
     ],
 )

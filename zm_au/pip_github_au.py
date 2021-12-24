@@ -72,3 +72,11 @@ class PipGitHubAU(BaseAU):
         if has_id:
             subprocess.run(
                 ["install-directives", self._pip_package.name, "install"])
+
+    @property
+    def currently_installed_version_is_unreleased(self) -> bool:
+        module = importlib.import_module(self._pip_package.name)
+        try:
+            return module.__dev__
+        except AttributeError:
+            return False
