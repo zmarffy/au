@@ -5,14 +5,13 @@ import subprocess
 import sys
 from typing import Optional
 
+import packaging.version
 from zetuptools import PipPackage
 
 from .base_au import BaseAU, UpdateException
 
 
 class PipGitHubAU(BaseAU):
-
-    # TODO: Make this inherit from a GitHubBaseAU (requires a slight refactor)
 
     def __init__(self, name: str, github_location: str, check_prerelease: bool = False, dist: str = "whl", silent: bool = False):
         # If silent, redirect output of pip to the null device
@@ -79,4 +78,4 @@ class PipGitHubAU(BaseAU):
         try:
             return module.__dev__
         except AttributeError:
-            return False
+            return bool(packaging.version.parse(module.__version__).local)

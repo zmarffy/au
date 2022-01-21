@@ -1,10 +1,11 @@
 import importlib
 import os
-from typing import Optional, Union
-import requests
 import subprocess
 import sys
+from typing import Optional, Union
 
+import packaging.version
+import requests
 from zetuptools import PipPackage
 
 from .base_au import BaseAU
@@ -54,4 +55,4 @@ class PipAU(BaseAU):
         try:
             return module.__dev__
         except AttributeError:
-            return False
+            return bool(packaging.version.parse(module.__version__).local)

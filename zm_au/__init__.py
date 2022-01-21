@@ -2,5 +2,4 @@ from .base_au import BaseAU
 from .pip_github_au import PipGitHubAU
 from .pip_au import PipAU
 
-__version__ = "1.1.0"
-__dev__ = False
+__version__ = '0.0.0'

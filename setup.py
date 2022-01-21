@@ -1,25 +1,5 @@
-import os
-import re
 import setuptools
 
-with open(os.path.join('zm_au', '__init__.py'), encoding='utf8') as f:
-    version = re.search(r'__version__ = "(.*?)"', f.read()).group(1)
+if __name__ == "__main__":
+    setuptools.setup()
 
-setuptools.setup(
-    name='zm-au',
-    version=version,
-    author='Zeke Marffy',
-    author_email='zmarffy@yahoo.com',
-    packages=setuptools.find_packages(),
-    url='https://github.com/zmarffy/au',
-    license='MIT',
-    description='Auto-updater for programs',
-    python_requires='>=3.6',
-    long_description=open('README.md').read(),
-    long_description_content_type='text/markdown',
-    install_requires=[
-        'packaging',
-        'zetuptools>=4.0.0',
-        'zmtools>=2.0.0'
-    ],
-)

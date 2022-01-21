@@ -70,4 +70,4 @@ class BaseAU():
     def needs_update(self) -> bool:
         latest_version = packaging.version.parse(self.latest_version)
         current_version = packaging.version.parse(self.current_version)
-        return (latest_version > current_version) or (latest_version == current_version and not self.currently_installed_version_is_unreleased)
+        return latest_version > current_version
