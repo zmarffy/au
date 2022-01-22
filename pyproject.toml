@@ -9,6 +9,7 @@ homepage = "https://github.com/zmarffy/au"
 license = "MIT"
 
 [tool.poetry.dependencies]
+python = "^3.8"
 packaging = "^20.9"
 zetuptools = "^4.0.0"
 zmtools = "^2.0.0"
