@@ -74,8 +74,4 @@ class PipGitHubAU(BaseAU):
 
     @property
     def currently_installed_version_is_unreleased(self) -> bool:
-        module = importlib.import_module(self._pip_package.name)
-        try:
-            return module.__dev__
-        except AttributeError:
-            return bool(packaging.version.parse(module.__version__).local)
+        return bool(packaging.version.parse(self.current_version).local) or self._pip_package.editable

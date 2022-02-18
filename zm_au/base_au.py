@@ -68,6 +68,11 @@ class BaseAU():
 
     @property
     def needs_update(self) -> bool:
-        latest_version = packaging.version.parse(self.latest_version)
-        current_version = packaging.version.parse(self.current_version)
-        return latest_version > current_version
+        if self.current_version == "0.0.0":
+            return False
+        elif self.currently_installed_version_is_unreleased:
+            return False
+        else:
+            current_version = packaging.version.parse(self.current_version)
+            latest_version = packaging.version.parse(self.latest_version)
+            return latest_version > current_version
