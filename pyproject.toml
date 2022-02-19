@@ -11,7 +11,7 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.8"
 packaging = "^20.9"
-zetuptools = "^4.0.0"
+zetuptools = "^4.0.1"
 zmtools = "^2.0.0"
 
 [tool.poetry.dev-dependencies]
