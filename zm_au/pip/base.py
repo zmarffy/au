@@ -6,21 +6,20 @@ from typing import Optional, Union
 
 import packaging.version
 import requests
-from install_directives import PipPackage
+from python_install_directives import PipPackage
 
 from ..base import BaseAU
 
 
 class PipAU(BaseAU):
     def __init__(self, name: str, silent: bool = False) -> None:
-        # If silent, redirect output of pip to the null device
         self._pip_package = PipPackage(name)
         self.silent = silent
         super().__init__()
 
     @property
     def _o(self) -> Optional[int]:
-        # Determines what to redirect output to
+        # If silent, redirect output of pip to the null device
         if self.silent:
             return subprocess.DEVNULL
         else:
@@ -49,7 +48,9 @@ class PipAU(BaseAU):
             stdout=self._o,
         )
         try:
-            importlib.import_module(f"{self._pip_package.name}.install_directives")
+            importlib.import_module(
+                f"{self._pip_package.name}.python_install_directives"
+            )
         except ModuleNotFoundError:
             has_id = False
         else:
@@ -59,7 +60,4 @@ class PipAU(BaseAU):
 
     @property
     def currently_installed_version_is_unreleased(self) -> bool:
-        return (
-            bool(packaging.version.parse(self.current_version).local)
-            or self._pip_package.editable
-        )
+        return bool(packaging.version.parse(self.current_version).local)

@@ -12,13 +12,14 @@ class UpdateException(Exception):
 
 
 class BaseAU:
-    """Base auto-updater class. Will not work as is; its purpose is to be inherited from.
+    """Base auto-updater. Should be inherited from.
 
     Attributes:
         current_version (str): The current version of the package.
         latest_version (str): The latest version of the package.
         needs_update (bool): If the package is not the latest version.
     """
+
     def __init__(self) -> None:
         self.current_version = self._get_current_version()
         self.latest_version = self._get_latest_version()
@@ -70,9 +71,7 @@ class BaseAU:
 
     @property
     def needs_update(self) -> bool:
-        if self.current_version == "0.0.0":
-            return False
-        elif self.currently_installed_version_is_unreleased:
+        if self.current_version == "0.0.0" or self.currently_installed_version_is_unreleased:
             return False
         else:
             return packaging.version.parse(

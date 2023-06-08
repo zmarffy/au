@@ -6,7 +6,7 @@ import sys
 from typing import Optional
 
 import packaging.version
-from install_directives import PipPackage
+from python_install_directives import PipPackage
 
 from ..base import BaseAU, UpdateException
 
@@ -20,8 +20,7 @@ class PipGitHubAU(BaseAU):
         dist: str = "whl",
         silent: bool = False,
     ):
-        # If silent, redirect output of pip to the null device
-        # Other parameters tell which uploads to look for and where (note that github_location's format is like "zmarffy/au")
+        # These parameters tell which uploads to look for and where (note that github_location's format is like "zmarffy/au")
         self._pip_package = PipPackage(name)
         self.github_location = github_location
         self.check_prerelease = check_prerelease
@@ -31,7 +30,7 @@ class PipGitHubAU(BaseAU):
 
     @property
     def _o(self) -> Optional[int]:
-        # Determines what to redirect output to
+        # If silent, redirect output of pip to the null device
         if self.silent:
             return subprocess.DEVNULL
         else:
@@ -86,7 +85,9 @@ class PipGitHubAU(BaseAU):
             [sys.executable, "-m", "pip", "install", update_file], stdout=self._o
         )
         try:
-            importlib.import_module(f"{self._pip_package.name}.install_directives")
+            importlib.import_module(
+                f"{self._pip_package.name}.python_install_directives"
+            )
             has_id = True
         except ModuleNotFoundError:
             has_id = False
@@ -95,7 +96,4 @@ class PipGitHubAU(BaseAU):
 
     @property
     def currently_installed_version_is_unreleased(self) -> bool:
-        return (
-            bool(packaging.version.parse(self.current_version).local)
-            or self._pip_package.editable
-        )
+        return bool(packaging.version.parse(self.current_version).local)
