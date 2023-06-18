@@ -57,7 +57,7 @@ class BaseAU:
             )
         ):
             with TemporaryDirectory() as temp_dir:
-                with zmtools.working_directory(temp_dir):
+                with zmtools.working_directory(Path(temp_dir)):
                     update_file = self._download()
                     self._update(update_file)
             print("Exiting as an update has completed")
@@ -71,7 +71,10 @@ class BaseAU:
 
     @property
     def needs_update(self) -> bool:
-        if self.current_version == "0.0.0" or self.currently_installed_version_is_unreleased:
+        if (
+            self.current_version == "0.0.0"
+            or self.currently_installed_version_is_unreleased
+        ):
             return False
         else:
             return packaging.version.parse(
